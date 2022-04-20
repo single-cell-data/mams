@@ -1,31 +1,22 @@
-Overview
-The past two decades have seen an explosion of high throughput genomic technologies that have revolutionized our ability to characterize the biological heterogeneity of samples. Several major consortia have been funded by the NIH and non-profit organizations to create cellular atlases of healthy and disease tissues. These consortia are utilizing a variety of genomic and imaging assays to characterize molecular features of cells within complex tissue samples. Many molecular datasets are being generated across cancer types that contain multi-modal data collected from longitudinally- and spatially-related biological specimens. A major roadblock to this goal is that the data is stored in a wide variety of file formats or programming language-specific libraries, classes, or data structures. Although a wide range of experimental protocols and platforms are available, an important commonality across these technologies is that they often produce a matrix of features that are measured in a set of observations. These feature and observation matrices (FOMs) are foundational for storing raw data from molecular assays (e.g. raw counts) and derived data from down-stream analytical tools (e.g. normalized matrix). A variety of file formats are used to store FOMs on file systems in different representations. For example, Tab Separated Value (tsv/txt) files can be used to store raw  data in dense matrices while Market Exchange (.mtx) files can be used to efficiently store raw data in sparse matrices. Although platform-independent, these formats do not readily capture relationships between matrices, do not inherently contain structures for feature and observation annotations, and do not easily provide random access to subsets of the data. Several libraries and classes also exist that can capture relationships between matrices and annotations including AnnData in Python1, the Seurat2 object in R, and the SingleCellExperiment package in R/BioConductor3. In contrast to file formats, these objects can capture more complex relationships between some types of FOMs as well as annotation data. However, they are programming platform dependent and conversion between objects is required to run different tools from different platforms. In order to facilitate data sharing across groups and technologies, and assays, and to promote interoperability between down-stream analysis tools, a detailed data schema describing the characteristics of FOMs needs to be developed and will serve a standard useful for the community.
-
-
-FOM class 
+# FOM class 
 
 General description: A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
 
-REQUIRED FIELDS
+## REQUIRED FIELDS
 
-fom_id - Character string denoting the unique id of the FOM. The ID will be used to link FAMs and OAMs and should be unique within the scope of the dataset denoted by the dataset_id. Specification considerations: This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the ID could be a combination of modality and processing tags with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects. 
+**Field:** fom_id  
+**Value:** Character string  
+**Description:** Denotes the unique id of the FOM and should be unique within the scope of the dataset.  
+**Notes and considerations for implementation:** This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the ID could be a combination of `modality` and `processing` fields with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects.  
 
-class - Must equal “fom”.
-
-OPTIONAL FIELDS
-
-Grouping fields
-
-fom_group_id - The FOM group ID. All FOMs within the group are required to have the same features and observations. If the FOM is stored in an array-like format, it is recommended that the features and observations be in the same order.
-obs_group_id - The observation group ID. All FOMs within this group are required to have the same observations. If the FOM is stored in an array-like format, the observations are required to be in the same order.
-dataset_id - The dataset ID. All FOMs within this group should have observations and features that belong to a superset of observations and features that denote an entire dataset. 
-
-Specification considerations: The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
+**Field:** class  
+**Value:** Charcater string  
+**Description:** Must be equal to "fom".  
 
 
+## OPTIONAL FIELDS
 
-
-Matrix description fields
+### Matrix description fields
 
 data_type - Explicitly describes the type of data stored in the FOM (e.g. int, int64, double, enum/categorical, etc).
 
@@ -80,44 +71,70 @@ obs_unit - Biological unit of the observations
 bulk - Features are quantified for a collection of cells (e.g. bulk) such as tissue or culture
 cell - Features are quantified for individual cells
 
+### Grouping fields
 
-Observation ID class
+**Field:** dataset_id   
+**Value:**  Character string  
+**Description:** All FOMs within this group should have observations and features that belong to a superset of observations and features that encompass an entire dataset.  
+**Notes and considerations for implementation:**  
+
+**Field:** fom_group_id  
+**Value:** Character string  
+**Description:** A group of FOMs with the same sets of features and observations.   
+**Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the features and observations be in the same order across FOMs. 
+
+**Field:** obs_group_id  
+**Value:** Character string    
+**Description:** A group of FOMs with the same set of observations.  
+**Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs.  
+The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
+
+
+
+# Observation ID class
 General Description: An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
-REQUIRED FIELDS
+## REQUIRED FIELDS
 class - Must equal “oid”.
 fom_id - A character string that matches a denotes the corresponding ID for a FOM or FOM group
 
-OPTIONAL FIELDS
+## OPTIONAL FIELDS
 oid_header - A character string denoting headers of the IDs. For example if the matrix contains RNA expression data for cells, then this field can be labeled “cell_id”. If the OID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the OID matrix. If the OID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the sample_id and cell_id are present, then this field should be “sample_id.cell_id”.
 oid_delim - A character string denoting the delimiter that can be used to separate compound Observation IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
 
-Feature ID class
+# Feature ID class
 
 General description: A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
-REQUIRED FIELDS
+## REQUIRED FIELDS
 class - Must equal “fid”. 
 fom_id - A character string that matches a denotes the corresponding ID for a FOM or FOM group
 
-Observation Annotation Matrix (OAM) class
+# Observation Annotation Matrix (OAM) class
 General description: An observation_id is a character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OAM consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OAM is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
-REQUIRED FIELDS
+## REQUIRED FIELDS
 class - Must equal “oam”. 
 fom_id - A character string that matches a denotes the corresponding ID for a FOM, FOM group, or Observation group
 
-OPTIONAL FIELDS
+## OPTIONAL FIELDS
 observation_modality - Vector denoting the modality of each observation. This field may often be the same as another field or a combination of other fields such as analyte or species.
-Feature Annotation Matrix class
-REQUIRED FIELDS
+
+# Feature Annotation Matrix class
+
+## REQUIRED FIELDS
 class - Must equal “fam”. 
 fom_id - A character string that matches a denotes the corresponding ID for a FOM or FOM group
 
-OPTIONAL FIELDS
+## OPTIONAL FIELDS
 feature_modality - Vector denoting the modality of each feature. This field may often be the same as another field or a combination of other fields such as analyte or species.
 
-Observation Graph class
+## Observation Graph class
+
+## REQUIRED FIELDS
+
 class - Must equal “ogr”.
+
+## OPTIONAL FIELDS
 edge_metric - Name of the distance or similarity metric used to create the edges.
 metric_type - One of “distance” or “similarity”.  “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
