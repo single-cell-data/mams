@@ -13,11 +13,42 @@ General description: A feature and observation matrix (FOM) is a data matrix tha
 
 ## Matrix description fields
 
-data_type - Explicitly describes the type of data stored in the FOM (e.g. int, int64, double, enum/categorical, etc).
+**Field:** data_type  
+**Value:** Character string    
+**Description:** Explicitly describes the type of data stored in the FOM (e.g. int, int64, double, enum/categorical, etc). 
+**Notes and considerations for implementation:**  
 
-representation - Preferred representation of the matrix.
-sparse - The matrix contains zeros for most of the measurements.
-dense - The matrix contains non-zeros for most of the measurements.
+**Field:** representation  
+**Value:** Character string    
+**Description:** Preferred representation of the matrix.  
+**Notes and considerations for implementation:**  
+
+**Field:** representation_description  
+**Value:** Character string    
+**Description:** A brief description of the `representation` tag 
+
+**Suggested categories for `representation` and `representation_description`:**
+
+| representation | representation_description | Example |
+| -------------- | ---------------------------| ----------------|
+| sparse | The matrix contains zeros for the majority of the measurements. |
+| dense | The matrix contains non-zeros for the majority of the measurements. |
+
+**Field:** obs_unit  
+**Value:** Character string    
+**Description:** Biological unit of the observations  
+
+**Field:** obs_unit_description  
+**Value:** Character string    
+**Description:** A brief description of the `obs_unit` tag 
+
+**Suggested categories for `obs_unit` and `obs_unit_description`:**
+
+| obs_unit | obs_unit_description | Notes/Examples |
+| -------------- | ---------------------------| ----------------|
+| bulk | Features are quantified for a collection of cells (e.g. bulk) such as tissue or culture | Bulk RNA-seq or ATAC-seq |
+| cell | Features are quantified for individual cells | Single-cell RNA-seq or single-cell ATAC-seq |
+
 
 **Field:** processing  
 **Value:** Character string    
@@ -30,22 +61,22 @@ dense - The matrix contains non-zeros for most of the measurements.
 
 **Suggested categories for `processing` and `processing_description`:**
 
-| processing | processing_description | Parent category |
-| ---------- | -----------------------| ----------------|
-| raw | Original measurements have not been altered | |
-| counts | Raw data for assays that produce integer-like data such as scRNA-seq | raw |
-| intensities | Raw data for assays that produce continuous data such as mIF | raw |
+| processing | processing_description | Notes/Examples |
+| ---------- | -----------------------| ------- | 
+| raw | Original measurements have not been altered |
+| counts | Raw data for assays that produce integer-like data such as scRNA-seq. Child of `raw`.|  |
+| intensities | Raw data for assays that produce continuous data. Child of `raw`. | |
+| decontaminated | Measurements have been corrected for background signal such as ambient RNA in single-cell RNA-seq. Child of `raw`. | |
 | lograw | The log of the raw data |
-| logcounts | The log of the raw counts | lograw |
-| logintensities | The log of the raw intensity values | lograw |
-| decontaminated | Measurements have been corrected for background signal such as ambient RNA in single-cell RNA-seq | raw |
+| logcounts | The log of the raw counts Child of `lograw`. | |
+| logintensities | The log of the raw intensity values. Child of `raw`.| |
 | corrected | Measurements have been corrected for observation-level covariates | |
-| normalized | Data that has been normalized for differences in overall signal abundance between observations | |
-| lognormalized | Data that has been log transformed after normalizing for differences in overall signal abundance between observations | normalized |
-| centered | Data with features have been made to center around a standard quantity such as the mean or median | |
-| scaled | Data with features have been centered around a standard quantity and standardized to have similar variances or ranges | |
-| reduction | A matrix containing a data dimensionality reduction generally useful for input into tools for downstream analysis such as clustering or 2D-embedding | |
-| embedding | A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization | reduction | 
+| normalized | Data that has been normalized for differences in overall signal abundance between observations. | |
+| lognormalized | Data that has been log transformed after normalizing for differences in overall signal abundance between observations. Child of `normalized`.| |
+| centered | Data with features have been made to center around a standard quantity such as the mean or median. | Mean-centered data |
+| scaled | Data with features have been centered around a standard quantity and standardized to have similar variances or ranges. | Z-scored data |
+| reduction | A matrix containing a data dimensionality reduction generally useful for input into tools for downstream analysis such as clustering or 2D-embedding. | PCA, ICA, Autoencoders |
+| embedding | A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization. Child of `reduction` | UMAP, tSNE | 
 
 **Field:** analyte  
 **Value:** Character string    
@@ -55,19 +86,18 @@ dense - The matrix contains non-zeros for most of the measurements.
 **Field:** analyte_description  
 **Value:** Character string    
 **Description:** A brief description of the `analyte` field.   
-**Notes and considerations for implementation:** If a suggested analyte category is used below,
 
 **Suggested categories for `analyte` and `analyte_description`:**
 
-| analyte | analyte_description | Parent category |
+| analyte | analyte_description | Notes/Examples |
 | ------- | ------------------- | --------------- |
-| rna | Used for technologies that measure RNA expression levels. This should generally be used for assays listed under “RNA assay” (EFO_0001457) from the OLS.
-| dna | Used for technologies that measure features of DNA. This should generally be used for assays listed under “DNA assay” (EFO_0001456) from the OLS.
-| chromatin | Used for technologies that measure open chromatin regions of DNA. 
-| protein | Used for technologies that measure protein expression levels. This should generally be used for assays listed under “protein assay” (EFO_0001458) from the OLS. CITE-seq and Total-seq assays that measure levels of cell surface proteins should be included here. 
-| morphology | Used for morphological measurements often derived from imaging technologies (e.g. cell size or shape). 
-| lipid | Used for technologies that measure lipid levels.
-| metabolite | Used for technologies that measure metabolite levels. 
+| rna | Used for technologies that measure RNA expression levels. | This should generally be used for assays listed under “RNA assay” (EFO_0001457) from the OLS. |
+| dna | Used for technologies that measure features of DNA. | This should generally be used for assays listed under “DNA assay” (EFO_0001456) from the OLS. |
+| chromatin | Used for technologies that measure open chromatin regions of DNA. |
+| protein | Used for technologies that measure protein expression levels. | This should generally be used for assays listed under “protein assay” (EFO_0001458) from the OLS. Examples include CITE-seq, Total-seq, CODEX, MIBI. |
+| morphology | Used for morphological measurements often derived from imaging technologies (e.g. cell size or shape). |
+| lipid | Used for technologies that measure lipid levels. |
+| metabolite | Used for technologies that measure metabolite levels. |
 
 **Field:** modality  
 **Value:** Character string    
@@ -88,7 +118,7 @@ dense - The matrix contains non-zeros for most of the measurements.
 
 **Suggested categories for `obs_subset` and `obs_subset_description`:**
 
-| obs_subset | obs_subset_description | Parent category |
+| obs_subset | obs_subset_description | Examples |
 | ---------- | ---------------------- | --------------- |
 | full | Observations have not been filtered or subsetted. |
 | filtered | Observations that have enough signal above background. For example, droplets (or cell barcodes) that have enough counts to be considered to be non-empty. Similar to the “filtered” matrix from CellRanger. |
@@ -104,7 +134,6 @@ dense - The matrix contains non-zeros for most of the measurements.
 **Notes and considerations for implementation:**  
 subset - Denotes different subsets of features that may be required at different stages of analysis after removing poor quality or not detected features. This is a general term to describe a subset of features that is usually based on biological characteristics rather than filtering for quality control purposes. Specification considerations: See “subset” in obs_subset.
 
-
 **Field:** feature_subset_description
 **Value:** Character string    
 **Description:** A brief description of the `feature_subset` field.   
@@ -112,26 +141,18 @@ subset - Denotes different subsets of features that may be required at different
 
 **Suggested categories for `feature_subset` and `feature_subset_description`:**
 
-| feature_subset | feature_subset_description | Example |
+| feature_subset | feature_subset_description | Examples |
 | -------------- | -------------------------- | ------- |
 | full | Features have not been filtered or subsetted. | |
 | threshold | Features that have a total signal above a certain threshold | Only including features with a total UMI or read count above a certain threshold across observations. | 
 | detected | Features that have a minimum level of detection across observations. Only including features with at least 3 counts in at least 3 observations. |
 | variable | Features that have minimum level of variability across all cells | The top 2,000 most variable features across observations |
 
-
-
-
-obs_unit - Biological unit of the observations
-bulk - Features are quantified for a collection of cells (e.g. bulk) such as tissue or culture
-cell - Features are quantified for individual cells
-
 ## Grouping fields
 
 **Field:** dataset_id   
 **Value:**  Character string  
 **Description:** All FOMs within this group should have observations and features that belong to a superset of observations and features that encompass an entire dataset.  
-**Notes and considerations for implementation:**  
 
 **Field:** fom_group_id  
 **Value:** Character string  
@@ -142,7 +163,7 @@ cell - Features are quantified for individual cells
 **Value:** Character string    
 **Description:** A group of FOMs with the same set of observations.  
 **Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs.  
-The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
+**Considerations for implementation:**  The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
 
 
 # Observation ID class
