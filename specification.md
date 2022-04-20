@@ -24,21 +24,29 @@ representation - Preferred representation of the matrix.
 sparse - The matrix contains zeros for most of the measurements.
 dense - The matrix contains non-zeros for most of the measurements.
 
-processing - Character string describing the state of the data contained within the matrix. This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance field. Suggested categories include:
-raw - Measurements have not been altered from their original value.
-counts - Raw data for assays that produce integer-like data such as scRNA-seq.
-intensities - Raw data for assays that produce continuous data such as mIF.
-lograw - The log of the raw data. 
-logcounts - The log of the raw counts
-logintensities - The log of the raw intensity values
-decontaminated - Measurements have been corrected for background signal such as ambient RNA in single-cell RNA-seq.
-corrected - Measurements have been corrected for observation-level covariates.
-normalized - Data that has been normalized for differences in overall signal abundance between observations
-lognormalized - Data that has been log transformed after normalizing for differences in overall signal abundance between observations. 
-centered - Data with features have been made to center around a standard quantity such as the mean or median. 
-scaled - Data with features have been centered around a standard quantity and standardized to have similar variances or ranges
-reduction - A matrix containing a data dimensionality reduction generally useful for input into tools for downstream analysis such as clustering or 2D-embedding.
-embedding - A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization.
+**Field:** processing  
+**Value:** Character string    
+**Description:** Describes the state of the data contained within the matrix.  
+**Notes and considerations for implementation:** This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance field.   
+
+**Suggested categories for `processing` and `processing_description`:**
+
+| processing | processing_description | Parent category |
+| ---------- | -----------------------| ----------------|
+| raw | Original measurements have not been altered | |
+| counts | Raw data for assays that produce integer-like data such as scRNA-seq | raw |
+| intensities | Raw data for assays that produce continuous data such as mIF | raw |
+| lograw | The log of the raw data |
+| logcounts | The log of the raw counts | lograw |
+| logintensities | The log of the raw intensity values | lograw |
+| decontaminated | Measurements have been corrected for background signal such as ambient RNA in single-cell RNA-seq | raw |
+| corrected | Measurements have been corrected for observation-level covariates | |
+| normalized | Data that has been normalized for differences in overall signal abundance between observations | |
+| lognormalized | Data that has been log transformed after normalizing for differences in overall signal abundance between observations | normalized |
+| centered | Data with features have been made to center around a standard quantity such as the mean or median | |
+| scaled | Data with features have been centered around a standard quantity and standardized to have similar variances or ranges | |
+| reduction | A matrix containing a data dimensionality reduction generally useful for input into tools for downstream analysis such as clustering or 2D-embedding | |
+| embedding | A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization | reduction | 
 
 analyte - Character string denoting the biological analytes being measured in the matrix. Suggested categories include:
 rna - Used for technologies that measure RNA expression levels. This should generally be used for assays listed under “RNA assay” (EFO_0001457) from the OLS.
