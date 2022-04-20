@@ -26,8 +26,12 @@ dense - The matrix contains non-zeros for most of the measurements.
 
 **Field:** processing  
 **Value:** Character string    
-**Description:** Describes the state of the data contained within the matrix.  
+**Description:** Used to describe the nature of the data contained within the matrix.  
 **Notes and considerations for implementation:** This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance field.   
+
+**Field:** processing_description  
+**Value:** Character string    
+**Description:** A brief description of the `processing` tag.   
 
 **Suggested categories for `processing` and `processing_description`:**
 
@@ -48,14 +52,27 @@ dense - The matrix contains non-zeros for most of the measurements.
 | reduction | A matrix containing a data dimensionality reduction generally useful for input into tools for downstream analysis such as clustering or 2D-embedding | |
 | embedding | A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization | reduction | 
 
-analyte - Character string denoting the biological analytes being measured in the matrix. Suggested categories include:
-rna - Used for technologies that measure RNA expression levels. This should generally be used for assays listed under “RNA assay” (EFO_0001457) from the OLS.
-dna - Used for technologies that measure features of DNA. This should generally be used for assays listed under “DNA assay” (EFO_0001456) from the OLS.
-chromatin (or atac) - Used for technologies that measure open chromatin regions of DNA. 
-protein - Used for technologies that measure protein expression levels. This should generally be used for assays listed under “protein assay” (EFO_0001458) from the OLS. CITE-seq and Total-seq assays that measure levels of cell surface proteins should be included here. 
-morphology - Used for morphological measurements often derived from imaging technologies (e.g. cell size or shape). 
-lipid - Used for technologies that measure lipid levels.
-metabolite - Used for technologies that measure metabolite levels. 
+**Field:** analyte  
+**Value:** Character string    
+**Description:** Used to describe the biological analytes being measured in the matrix.
+**Notes and considerations for implementation:** This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance field.   
+
+**Field:** analyte_description  
+**Value:** Character string    
+**Description:** A brief description of the `analyte` field.   
+**Notes and considerations for implementation:** If a suggested analyte category is used below,
+
+**Suggested categories for `analyte` and `analyte_description`:**
+
+| analyte | analyte_description | Parent category |
+| ---------- | -----------------------| ----------------|
+| rna | Used for technologies that measure RNA expression levels. This should generally be used for assays listed under “RNA assay” (EFO_0001457) from the OLS.
+| dna | Used for technologies that measure features of DNA. This should generally be used for assays listed under “DNA assay” (EFO_0001456) from the OLS.
+| chromatin | Used for technologies that measure open chromatin regions of DNA. 
+| protein | Used for technologies that measure protein expression levels. This should generally be used for assays listed under “protein assay” (EFO_0001458) from the OLS. CITE-seq and Total-seq assays that measure levels of cell surface proteins should be included here. 
+| morphology | Used for morphological measurements often derived from imaging technologies (e.g. cell size or shape). 
+| lipid | Used for technologies that measure lipid levels.
+| metabolite | Used for technologies that measure metabolite levels. 
 
 modality - Character string denoting the modality of the matrix. If features or observations are of mixed modalities, then feature_modality in the FAM class or observation_modality in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as analyte or species.
 
