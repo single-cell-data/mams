@@ -65,7 +65,7 @@ dense - The matrix contains non-zeros for most of the measurements.
 **Suggested categories for `analyte` and `analyte_description`:**
 
 | analyte | analyte_description | Parent category |
-| ---------- | -----------------------| ----------------|
+| ------- | ------------------- | --------------- |
 | rna | Used for technologies that measure RNA expression levels. This should generally be used for assays listed under “RNA assay” (EFO_0001457) from the OLS.
 | dna | Used for technologies that measure features of DNA. This should generally be used for assays listed under “DNA assay” (EFO_0001456) from the OLS.
 | chromatin | Used for technologies that measure open chromatin regions of DNA. 
@@ -74,23 +74,58 @@ dense - The matrix contains non-zeros for most of the measurements.
 | lipid | Used for technologies that measure lipid levels.
 | metabolite | Used for technologies that measure metabolite levels. 
 
-modality - Character string denoting the modality of the matrix. If features or observations are of mixed modalities, then feature_modality in the FAM class or observation_modality in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as analyte or species.
+**Field:** modality  
+**Value:** Character string    
+**Description:** Describes the modality of the matrix.  
+**Notes and considerations for implementation:**  If features or observations are of mixed modalities, then `feature_modality` in the FAM class or `observation_modality` in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
 
-obs_subset - Character string denoting the subset of observations that are present in the FOM. 
-full - Observations have not been filtered or subsetted.
-filtered - Observations that have enough signal above background. For example, droplets (or cell barcodes) that have enough counts to be considered to be non-empty. Similar to the “filtered” matrix from CellRanger.
-threshold - Observations that have a total signal above a certain threshold. For example, only including cells with a total UMI or read count above a certain threshold across features. 
-detected - Observations that have minimum levels of detection across features. For example, only including cells with at least 3 counts in at least 3 genes. 
-nonartifact - A general term to describe filtering that may occur due other quality control metrics. Examples of other artifacts in single cell RNA-seq data include high contamination from ambient material, high mitochondrial percentage, or doublets/multiplets. 
-clean - An “analysis ready” set of observations that have been filtered for total signal, detection across features, outliers, and any other artifacts deemed to be important to filter against. 
-subset - Denotes different subsets of observations that may be required at different stages of analysis after removing poor quality observations. This is a general term to describe a subset of observations that is usually based on biological characteristics and used after quality control. For example, after initial clustering and cell type identification, a subset of cells belonging to a particular cell type (e.g. T-cells) may be isolated and re-clustered to better characterize transitionary cell states within the cell type. This subset may have its own normalization, dimensionality reductions, embeddings, etc. Specification considerations: Specifications may want to allow for a custom label to be assigned to each subset. For example “subset: T-cell” or “subset (T-cell)” could be used to describe the fact that the subset of T-cells is contained within the matrix. This same functionality could also be obtained by including a unique subset label in the fom_id or the grouping IDs. 
+### Subset fields
 
-feature_subset - Character string denoting the subset of observations that are present in the FOM. 
-full - Features have not been filtered or subsetted.
-threshold - Features that have a total signal above a certain threshold. For example, only including features with a total UMI or read count above a certain threshold across cells. 
-detected - Features that have a minimum level of detection across observations. For example, only including features with at least 3 counts in at least 3 cells.
-variable - Features that have minimum level of variability across all cells. For example, the top 2,000 most variable features. 
+**Field:** obs_subset  
+**Value:** Character string    
+**Description:** Describes the subset of observations that are present in the FOM.  
+**Notes and considerations for implementation:**  This field can be used to denote different subsets of observations that may be required at different stages of analysis after removing poor quality observations. Several suggested cateogories are provided for common quality control steps. This term can also be used describe a matrix containing a subset of observations based on biological characteristics. For example, after initial clustering and cell type identification, a subset of cells belonging to a particular cell type (e.g. T-cells) may be isolated and re-clustered to better characterize transitionary cell states within the cell type. This subset may have its own normalization, dimensionality reductions, embeddings, etc. 
+
+**Field:** obs_subset_description
+**Value:** Character string    
+**Description:** A brief description of the `obs_subset` field.   
+**Notes and considerations for implementation:**  
+
+**Suggested categories for `obs_subset` and `obs_subset_description`:**
+
+| obs_subset | obs_subset_description | Parent category |
+| ---------- | ---------------------- | --------------- |
+| full | Observations have not been filtered or subsetted. |
+| filtered | Observations that have enough signal above background. For example, droplets (or cell barcodes) that have enough counts to be considered to be non-empty. Similar to the “filtered” matrix from CellRanger. |
+| threshold | Observations that have a total signal above a certain threshold. For example, only including cells with a total UMI or read count above a certain threshold across features. |
+| detected | Observations that have minimum levels of detection across features. For example, only including cells with at least 3 counts in at least 3 genes. |
+| nonartifact | A general term to describe filtering that may occur due other quality control metrics. Examples of other artifacts in single cell RNA-seq data include high contamination from ambient material, high mitochondrial percentage, or doublets/multiplets. |
+| clean | An “analysis ready” set of observations that have been filtered for total signal, detection across features, outliers, and any other artifacts deemed to be important to filter against for quality control purposes. |
+
+
+**Field:** feature_subset  
+**Value:** Character string    
+**Description:** Describes the subset of observations that are present in the FOM.  
+**Notes and considerations for implementation:**  
 subset - Denotes different subsets of features that may be required at different stages of analysis after removing poor quality or not detected features. This is a general term to describe a subset of features that is usually based on biological characteristics rather than filtering for quality control purposes. Specification considerations: See “subset” in obs_subset.
+
+
+**Field:** feature_subset_description
+**Value:** Character string    
+**Description:** A brief description of the `feature_subset` field.   
+**Notes and considerations for implementation:**  
+
+**Suggested categories for `feature_subset` and `feature_subset_description`:**
+
+| feature_subset | feature_subset_description | Example |
+| -------------- | -------------------------- | ------- |
+| full | Features have not been filtered or subsetted. | |
+| threshold | Features that have a total signal above a certain threshold | Only including features with a total UMI or read count above a certain threshold across observations. | 
+| detected | Features that have a minimum level of detection across observations. Only including features with at least 3 counts in at least 3 observations. |
+| variable | Features that have minimum level of variability across all cells | The top 2,000 most variable features across observations |
+
+
+
 
 obs_unit - Biological unit of the observations
 bulk - Features are quantified for a collection of cells (e.g. bulk) such as tissue or culture
