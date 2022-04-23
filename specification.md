@@ -1,6 +1,6 @@
 # FOM class 
 
-General description: A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
+**General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
 
 **Field:** fom_id  
 **Value:** Character string  
@@ -167,10 +167,11 @@ subset - Denotes different subsets of features that may be required at different
 
 
 # Observation ID class
-General Description: An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
+**General Description:** An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
-class - Must equal “oid”.
-fom_id - A character string that matches a denotes the corresponding ID for a FOM or FOM group
+**Field:** oid  
+**Value:** Character string  
+**Description:** Denotes the unique id of the matrix containing the observation IDs and should be unique within the scope of the dataset.  
 
 oid_header - A character string denoting headers of the IDs. For example if the matrix contains RNA expression data for cells, then this field can be labeled “cell_id”. If the OID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the OID matrix. If the OID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the sample_id and cell_id are present, then this field should be “sample_id.cell_id”.
 oid_delim - A character string denoting the delimiter that can be used to separate compound Observation IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
@@ -179,26 +180,35 @@ oid_delim - A character string denoting the delimiter that can be used to separa
 
 General description: A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
-class - Must equal “fid”. 
-fom_id - A character string that matches a denotes the corresponding ID for a FOM or FOM group
+**Field:** fid  
+**Value:** Character string  
+**Description:** Denotes the unique id of the matrix containing the feature IDs and should be unique within the scope of the dataset.  
 
-# Observation Annotation Matrix (OAM) class
+
+# Observation Annotation Matrix (OAM)
 General description: An observation_id is a character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OAM consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OAM is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
-class - Must equal “oam”. 
-fom_id - A character string that matches a denotes the corresponding ID for a FOM, FOM group, or Observation group
+**Field:** oam  
+**Value:** Character string  
+**Description:** Denotes the unique id of the matrix containing observation annotations and should be unique within the scope of the dataset.  
 
 observation_modality - Vector denoting the modality of each observation. This field may often be the same as another field or a combination of other fields such as analyte or species.
 
+
 # Feature Annotation Matrix class
 
-class - Must equal “fam”. 
-fom_id - A character string that matches a denotes the corresponding ID for a FOM or FOM group
+**Field:** fam
+**Value:** Character string  
+**Description:** Denotes the unique id of the matrix containing feature annotations and should be unique within the scope of the dataset.  
 
 feature_modality - Vector denoting the modality of each feature. This field may often be the same as another field or a combination of other fields such as analyte or species.
 
+
 ## Observation Graph class
 
-class - Must equal “ogr”.  
+**Field:** ogr
+**Value:** Character string  
+**Description:** Denotes the unique id of the matrix containing similarities or distances between observations and should be unique within the scope of the dataset.  
+
 edge_metric - Name of the distance or similarity metric used to create the edges.  
 metric_type - One of “distance” or “similarity”.  “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
