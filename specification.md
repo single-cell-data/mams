@@ -162,7 +162,8 @@ subset - Denotes different subsets of features that may be required at different
 **Field:** obs_group_id  
 **Value:** Character string    
 **Description:** A group of FOMs with the same set of observations.  
-**Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs.  
+**Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs. 
+
 **Considerations for implementation:**  The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
 
 
@@ -173,12 +174,19 @@ subset - Denotes different subsets of features that may be required at different
 **Value:** Character string  
 **Description:** Denotes the unique id of the matrix containing the observation IDs and should be unique within the scope of the dataset.  
 
-oid_header - A character string denoting headers of the IDs. For example if the matrix contains RNA expression data for cells, then this field can be labeled “cell_id”. If the OID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the OID matrix. If the OID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the sample_id and cell_id are present, then this field should be “sample_id.cell_id”.
-oid_delim - A character string denoting the delimiter that can be used to separate compound Observation IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
+**Field:** oid_header  
+**Value:** Character string  
+**Description:** Describes headers contained with the observation IDs.
+**Notes and considerations for implementation:**  For example if the matrix contains RNA expression data for cells, then this field can be labeled “cell_id”. If the OID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the OID matrix. If the OID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the sample_id and cell_id are present in the id, then this field should be “sample_id.cell_id”.
+
+**Field:** oid_header_delim  
+**Value:** Character string  
+**Description:** A character string denoting the delimiter that can be used to separate compound observation IDs in the header.
+**Notes and considerations for implementation:** The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
 
 # Feature ID class
 
-General description: A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
+**General description:** A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
 **Field:** fid  
 **Value:** Character string  
@@ -186,29 +194,42 @@ General description: A feature_id is a character vector or combination of charac
 
 
 # Observation Annotation Matrix (OAM)
-General description: An observation_id is a character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OAM consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OAM is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
+**General description:** An observation_id is a character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OAM consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OAM is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
 **Field:** oam  
 **Value:** Character string  
 **Description:** Denotes the unique id of the matrix containing observation annotations and should be unique within the scope of the dataset.  
 
-observation_modality - Vector denoting the modality of each observation. This field may often be the same as another field or a combination of other fields such as analyte or species.
+**Field:** observation_modality  
+**Value:** Character string or vector  
+**Description:** Vector denoting the modality of each observation.
+**Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
 # Feature Annotation Matrix class
+**General description:** TODO  
 
 **Field:** fam
 **Value:** Character string  
 **Description:** Denotes the unique id of the matrix containing feature annotations and should be unique within the scope of the dataset.  
 
-feature_modality - Vector denoting the modality of each feature. This field may often be the same as another field or a combination of other fields such as analyte or species.
+**Field:** feature_modality  
+**Value:** Character string or vector  
+**Description:** Vector denoting the modality of each feature.
+**Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
 ## Observation Graph class
+**General description:** TODO. 
 
-**Field:** ogr
+**Field:** ogr  
 **Value:** Character string  
 **Description:** Denotes the unique id of the matrix containing similarities or distances between observations and should be unique within the scope of the dataset.  
 
-edge_metric - Name of the distance or similarity metric used to create the edges.  
-metric_type - One of “distance” or “similarity”.  “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
+**Field:** edge_metric  
+**Value:** Character string  
+**Description:** Name of the distance or similarity metric used to create the edges.  
+
+**Field:** metric_type  
+**Value:** Character string. One of “distance” or “similarity”.  
+**Description:** “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
