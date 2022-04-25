@@ -1,3 +1,10 @@
+# General fields
+
+**Field:** class  
+**Value:** Character string  
+**Description:** Denotes the class of the matrix, array, data frame. One of `fom`, `fam`, `oam`, `fid`, or `oid`.   
+**Notes:** Each class will have a correpsonding set of metadata fields.
+
 # FOM class 
 
 **General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
