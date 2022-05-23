@@ -226,7 +226,7 @@ subset - Denotes different subsets of features that may be required at different
 **Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
-## Observation Graph class
+# Observation Graph class
 **General description:** TODO. 
 
 **Field:** ogr  
@@ -240,3 +240,27 @@ subset - Denotes different subsets of features that may be required at different
 **Field:** metric_type  
 **Value:** Character string. One of “distance” or “similarity”.  
 **Description:** “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
+
+
+# Provenance
+
+**Field:** record_package_name  
+**Value:** Character string  
+**Description:** Name of the package, tool, or software that ran the algorithm to produce the matrix, annotation, or graph.
+
+**Field:** record_package_version  
+**Value:** Character string  
+**Description:** Version of the package, tool, or software that ran the algorithm to produce the matrix, annotation, or graph.
+
+**Field:** record_function_name  
+**Value:** Character string    
+**Description:** Name of the function or mathematical operation used to produce the matrix, annotation, or graph.
+
+**Field:** record_function_parameters  
+**Value:** Character string or list   
+**Description:** Key/value pairs describing the primary parameters and their values used in the function call.
+
+**Field:** parent_id  
+**Value:** Character string or list    
+**Description:** Character string or list to denote the matrix id(s) that were used to produce the matrix.
+
