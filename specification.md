@@ -155,6 +155,15 @@ subset - Denotes different subsets of features that may be required at different
 | detected | Features that have a minimum level of detection across observations. Only including features with at least 3 counts in at least 3 observations. |
 | variable | Features that have minimum level of variability across all cells | The top 2,000 most variable features across observations |
 
+
+**Field:** parent_id  
+**Value:** Character string or list    
+**Description:** Character string or list to denote the matrix id(s) that were used to produce the matrix.
+
+**Field:** record_id  
+**Value:** Character string  
+**Description:** ID used to link FOMs to a specific record. This should match an ID in the `LOG` class.  
+
 ## Grouping fields
 
 **Field:** dataset_id   
@@ -227,7 +236,7 @@ subset - Denotes different subsets of features that may be required at different
 **Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
-# Observation Graph class
+# Observation Graph (OGR) class
 **General description:** TODO. 
 
 **Field:** ogr  
@@ -243,7 +252,13 @@ subset - Denotes different subsets of features that may be required at different
 **Description:** “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
 
 
-# Provenance
+# Provenance (LOG) class
+
+**General description:** These fields are used to capture information about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
+
+**Field:** record_id  
+**Value:** Character string  
+**Description:** ID used to link FOMs, annotations, and graphs to a specific set of `record_package_name`, `record_package_version`, `record_function_name`, and `record_function_parameters` fields. 
 
 **Field:** record_package_name  
 **Value:** Character string  
@@ -261,7 +276,4 @@ subset - Denotes different subsets of features that may be required at different
 **Value:** Character string or list   
 **Description:** Key/value pairs describing the primary parameters and their values used in the function call.
 
-**Field:** parent_id  
-**Value:** Character string or list    
-**Description:** Character string or list to denote the matrix id(s) that were used to produce the matrix.
 
