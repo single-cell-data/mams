@@ -201,7 +201,8 @@ subset - Denotes different subsets of features that may be required at different
 
 
 # Observation Annotation Matrix (OAM)
-**General description:** An observation_id is a character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OAM consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OAM is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
+**General description:** OAM objects are matrices or data frames with the same number of observations as its corresponding `FOM`. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
+
 
 **Field:** oam  
 **Value:** Character string  
@@ -214,7 +215,7 @@ subset - Denotes different subsets of features that may be required at different
 
 
 # Feature Annotation Matrix class
-**General description:** TODO  
+**General description:** `FAM` obects are matricies or data frames with the same number of features as its corresponding `FOM`. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
 **Field:** fam
 **Value:** Character string  
