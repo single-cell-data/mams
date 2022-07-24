@@ -6,16 +6,13 @@
 
 **Field:** id  
 **Value:** Character string  
-**Description:** Denotes the unique id of the matrix, data frame, or graph and should be unique within the set of objects within the same class of the dataset.  
-**Notes and considerations for implementation:** This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the IDs for FOMs could be a combination of `modality` and `processing` fields with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects.  
-
+**Description:** Denotes the unique id of the matrix, annotation data frame, or graph and should be unique within the set of objects within the same class of the dataset. This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the IDs for FOMs could be a combination of `modality` and `processing` fields with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects.  
 
 **Field:** class  
 **Value:** Character string  
-**Description:** Denotes the class of the matrix, array, data frame. One of `fom`, `fam`, `oam`, `fid`, or `oid`.   
-**Notes:** Each class will have a correpsonding set of metadata fields.
+**Description:** Denotes the class of the matrix, array, data frame. One of `fom`, `fam`, `oam`, `fid`, or `oid`. Each class will have a correpsonding set of metadata fields.
 
-# FOM class 
+# Featur Obsersvation Matrix (FOM) fields
 
 **General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
 
@@ -61,8 +58,7 @@
 
 **Field:** processing  
 **Value:** Character string    
-**Description:** Used to describe the nature of the data contained within the matrix.  
-**Notes and considerations for implementation:** This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance field.   
+**Description:** Used to describe the nature of the data contained within the matrix. This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance (LOG) fields.   
 
 **Field:** processing_description  
 **Value:** Character string    
@@ -88,9 +84,8 @@
 | embedding | A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization. Child of `reduction` | UMAP, tSNE | 
 
 **Field:** analyte  
-**Value:** Character string    
-**Description:** Used to describe the biological analytes being measured in the matrix.
-**Notes and considerations for implementation:** This field will help distinguish between the matrices that are produced at different stages of an analysis workflow. This field should not be used to infer a history of previous steps in the analysis workflow. So users should not have to use a particular sequence of tags and should not assume that each matrix has gone through a set of prior tags. Rather, the history of previous steps should be captured in the provenance field.   
+**Value:** Character string or list
+**Description:** Used to describe the biological analytes being quantified in the matrix. If more than one analyte was used to generate the values in a multi-modal analysis, then a list can be used to capture multiple analytes (e.g. a 2-D embedding generated from combined graph of RNA and protein data). 
 
 **Field:** analyte_description  
 **Value:** Character string    
@@ -110,20 +105,17 @@
 
 **Field:** modality  
 **Value:** Character string    
-**Description:** Describes the modality of the matrix.  
-**Notes and considerations for implementation:**  If features or observations are of mixed modalities, then `feature_modality` in the FAM class or `observation_modality` in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
+**Description:** Describes the modality of the matrix. If features or observations are of mixed modalities, then `feature_modality` in the FAM class or `observation_modality` in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
 
 ## Subset fields
 
 **Field:** obs_subset  
 **Value:** Character string    
-**Description:** Describes the subset of observations that are present in the FOM.  
-**Notes and considerations for implementation:**  This field can be used to denote different subsets of observations that may be required at different stages of analysis after removing poor quality observations. Several suggested cateogories are provided for common quality control steps. This term can also be used describe a matrix containing a subset of observations based on biological characteristics. For example, after initial clustering and cell type identification, a subset of cells belonging to a particular cell type (e.g. T-cells) may be isolated and re-clustered to better characterize transitionary cell states within the cell type. This subset may have its own normalization, dimensionality reductions, embeddings, etc. 
+**Description:** Describes the subset of observations that are present in the FOM. This field can be used to denote different subsets of observations that may be required at different stages of analysis after removing poor quality observations. Several suggested cateogories are provided for common quality control steps. This term can also be used describe a matrix containing a subset of observations based on biological characteristics. For example, after initial clustering and cell type identification, a subset of cells belonging to a particular cell type (e.g. T-cells) may be isolated and re-clustered to better characterize transitionary cell states within the cell type. This subset may have its own normalization, dimensionality reductions, embeddings, etc. 
 
 **Field:** obs_subset_description
 **Value:** Character string    
 **Description:** A brief description of the `obs_subset` field.   
-**Notes and considerations for implementation:**  
 
 **Suggested categories for `obs_subset` and `obs_subset_description`:**
 
@@ -136,17 +128,13 @@
 | nonartifact | A general term to describe filtering that may occur due other quality control metrics. Examples of other artifacts in single cell RNA-seq data include high contamination from ambient material, high mitochondrial percentage, or doublets/multiplets. |
 | clean | An “analysis ready” set of observations that have been filtered for total signal, detection across features, outliers, and any other artifacts deemed to be important to filter against for quality control purposes. |
 
-
 **Field:** feature_subset  
 **Value:** Character string    
-**Description:** Describes the subset of observations that are present in the FOM.  
-**Notes and considerations for implementation:**  
-subset - Denotes different subsets of features that may be required at different stages of analysis after removing poor quality or not detected features. This is a general term to describe a subset of features that is usually based on biological characteristics rather than filtering for quality control purposes. Specification considerations: See “subset” in obs_subset.
+**Description:** Describes the subset of features that are present in the FOM.   
 
 **Field:** feature_subset_description
 **Value:** Character string    
 **Description:** A brief description of the `feature_subset` field.   
-**Notes and considerations for implementation:**  
 
 **Suggested categories for `feature_subset` and `feature_subset_description`:**
 
@@ -156,7 +144,6 @@ subset - Denotes different subsets of features that may be required at different
 | threshold | Features that have a total signal above a certain threshold | Only including features with a total UMI or read count above a certain threshold across observations. | 
 | detected | Features that have a minimum level of detection across observations. Only including features with at least 3 counts in at least 3 observations. |
 | variable | Features that have minimum level of variability across all cells | The top 2,000 most variable features across observations |
-
 
 **Field:** parent_id  
 **Value:** Character string or list    
@@ -186,17 +173,16 @@ subset - Denotes different subsets of features that may be required at different
 
 
 # Observation ID class
+
 **General Description:** An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
 **Field:** oid_header  
 **Value:** Character string  
-**Description:** Describes headers contained with the observation IDs.
-**Notes and considerations for implementation:**  For example if the matrix contains RNA expression data for cells, then this field can be labeled “cell_id”. If the OID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the OID matrix. If the OID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the sample_id and cell_id are present in the id, then this field should be “sample_id.cell_id”.
+**Description:** Describes headers contained with the observation IDs. For example if the matrix contains RNA expression data for cells, then this field can be labeled “cell_id”. If the OID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the OID matrix. If the OID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the sample_id and cell_id are present in the id, then this field should be “sample_id.cell_id”.
 
 **Field:** oid_header_delim  
 **Value:** Character string  
-**Description:** A character string denoting the delimiter that can be used to separate compound observation IDs.
-**Notes and considerations for implementation:** The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
+**Description:** A character string denoting the delimiter that can be used to separate compound observation IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
 
 # Feature ID class
 
@@ -204,29 +190,25 @@ subset - Denotes different subsets of features that may be required at different
 
 **Field:** fid_header  
 **Value:** Character string  
-**Description:** Describes headers contained with the feature IDs.
-**Notes and considerations for implementation:**  For example if the matrix contains RNA expression data for cells, then this field can denote type of ID used (e.g. ENSEMBL). If the FID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the FID matrix. If the FID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the ENSENBL ID and GENE SYMBOL are concatenated in the FID with the period used as a delimiter, then this field should be “ENSEMBL_ID.SYMBOL”.
+**Description:** Describes headers contained with the feature IDs. For example if the matrix contains RNA expression data for cells, then this field can denote type of ID used (e.g. ENSEMBL). If the FID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the FID matrix. If the FID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the ENSENBL ID and GENE SYMBOL are concatenated in the FID with the period used as a delimiter, then this field should be “ENSEMBL_ID.SYMBOL”.
 
 **Field:** fid_header_delim  
 **Value:** Character string  
-**Description:** A character string denoting the delimiter that can be used to separate compound feature IDs.
-**Notes and considerations for implementation:** The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the FID is not a compound ID. 
+**Description:** A character string denoting the delimiter that can be used to separate compound feature IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the FID is not a compound ID. 
 
 
 # Observation Annotation Matrix (OAM)
 
 **General description:** OAM objects are matrices or data frames with the same number of observations as its corresponding `FOM`. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
-
 **Field:** observation_modality  
 **Value:** Character string or vector  
-**Description:** Vector denoting the modality of each observation.
-**Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
+**Description:** Vector denoting the modality of each observation. This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
 # Feature Annotation Matrix class
-**General description:** `FAM` obects are matricies or data frames with the same number of features as its corresponding `FOM`. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
+**General description:** `FAM` obects are matricies or data frames with the same number of features as its corresponding `FOM`. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
 **Field:** feature_modality  
 **Value:** Character string or vector  
