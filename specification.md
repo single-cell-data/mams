@@ -195,15 +195,26 @@ subset - Denotes different subsets of features that may be required at different
 
 **Field:** oid_header_delim  
 **Value:** Character string  
-**Description:** A character string denoting the delimiter that can be used to separate compound observation IDs in the header.
+**Description:** A character string denoting the delimiter that can be used to separate compound observation IDs.
 **Notes and considerations for implementation:** The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
 
 # Feature ID class
 
 **General description:** A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
+**Field:** fid_header  
+**Value:** Character string  
+**Description:** Describes headers contained with the feature IDs.
+**Notes and considerations for implementation:**  For example if the matrix contains RNA expression data for cells, then this field can denote type of ID used (e.g. ENSEMBL). If the FID is a compound ID with multiple vectors, then this should be a vector of the same length, essentially representing the headers of the FID matrix. If the FID is a single-string compound ID, then this field should denote each component of the ID separated by the delim character. For example, if the ENSENBL ID and GENE SYMBOL are concatenated in the FID with the period used as a delimiter, then this field should be “ENSEMBL_ID.SYMBOL”.
+
+**Field:** fid_header_delim  
+**Value:** Character string  
+**Description:** A character string denoting the delimiter that can be used to separate compound feature IDs.
+**Notes and considerations for implementation:** The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the FID is not a compound ID. 
+
 
 # Observation Annotation Matrix (OAM)
+
 **General description:** OAM objects are matrices or data frames with the same number of observations as its corresponding `FOM`. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
 
@@ -223,21 +234,33 @@ subset - Denotes different subsets of features that may be required at different
 **Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
-# Observation Graph (OGR) class
-**General description:** TODO. 
+# Observation Graph (ONG) class
+
+**General description:** Observation Neighborhood Graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of observations. These measurements are often used by graph-based clustering and visualization tools.
 
 **Field:** edge_metric  
 **Value:** Character string  
-**Description:** Name of the distance or similarity metric used to create the edges.  
+**Description:** Name of the distance or similarity metric used to create the edges between observations.  
 
 **Field:** metric_type  
 **Value:** Character string. One of “distance” or “similarity”.  
 **Description:** “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
 
+# Feature Graph (FNG) class
+**General description:** Feature neighborhood graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of features. These measurements are often used by graph-based clustering and visualization tools.
 
-# Provenance (LOG) class
+**Field:** edge_metric  
+**Value:** Character string  
+**Description:** Name of the distance or similarity metric used to create the edges between features.  
 
-**General description:** These fields are used to capture information about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
+**Field:** metric_type  
+**Value:** Character string. One of “distance” or “similarity”.  
+**Description:** “distance” indicates that smaller values denote more relatedness between features (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
+
+
+# LOG class
+
+**General description:** These fields are used to capture provenance about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
 
 **Field:** record_package_name  
 **Value:** Character string  
