@@ -1,4 +1,14 @@
+
+# Overview
+
+
 # General fields
+
+**Field:** id  
+**Value:** Character string  
+**Description:** Denotes the unique id of the matrix, data frame, or graph and should be unique within the set of objects within the same class of the dataset.  
+**Notes and considerations for implementation:** This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the IDs for FOMs could be a combination of `modality` and `processing` fields with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects.  
+
 
 **Field:** class  
 **Value:** Character string  
@@ -9,14 +19,6 @@
 
 **General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
 
-**Field:** fom_id  
-**Value:** Character string  
-**Description:** Denotes the unique id of the FOM and should be unique within the scope of the dataset.  
-**Notes and considerations for implementation:** This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the ID could be a combination of `modality` and `processing` fields with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects.  
-
-**Field:** class  
-**Value:** Charcater string  
-**Description:** Must be equal to "fom".  
 
 ## Matrix description fields
 
@@ -161,8 +163,8 @@ subset - Denotes different subsets of features that may be required at different
 **Description:** Character string or list to denote the matrix id(s) that were used to produce the matrix.
 
 **Field:** record_id  
-**Value:** Character string  
-**Description:** ID used to link FOMs to a specific record. This should match an ID in the `LOG` class.  
+**Value:** Character string or list  
+**Description:** ID used to link FOMs to a specific record or set of records that produced the FOM. This should match an ID in the `LOG` class.  
 
 ## Grouping fields
 
@@ -186,10 +188,6 @@ subset - Denotes different subsets of features that may be required at different
 # Observation ID class
 **General Description:** An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
-**Field:** oid  
-**Value:** Character string  
-**Description:** Denotes the unique id of the matrix containing the observation IDs and should be unique within the scope of the dataset.  
-
 **Field:** oid_header  
 **Value:** Character string  
 **Description:** Describes headers contained with the observation IDs.
@@ -204,18 +202,10 @@ subset - Denotes different subsets of features that may be required at different
 
 **General description:** A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
-**Field:** fid  
-**Value:** Character string  
-**Description:** Denotes the unique id of the matrix containing the feature IDs and should be unique within the scope of the dataset.  
-
 
 # Observation Annotation Matrix (OAM)
 **General description:** OAM objects are matrices or data frames with the same number of observations as its corresponding `FOM`. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
-
-**Field:** oam  
-**Value:** Character string  
-**Description:** Denotes the unique id of the matrix containing observation annotations and should be unique within the scope of the dataset.  
 
 **Field:** observation_modality  
 **Value:** Character string or vector  
@@ -226,9 +216,6 @@ subset - Denotes different subsets of features that may be required at different
 # Feature Annotation Matrix class
 **General description:** `FAM` obects are matricies or data frames with the same number of features as its corresponding `FOM`. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
-**Field:** fam
-**Value:** Character string  
-**Description:** Denotes the unique id of the matrix containing feature annotations and should be unique within the scope of the dataset.  
 
 **Field:** feature_modality  
 **Value:** Character string or vector  
@@ -238,10 +225,6 @@ subset - Denotes different subsets of features that may be required at different
 
 # Observation Graph (OGR) class
 **General description:** TODO. 
-
-**Field:** ogr  
-**Value:** Character string  
-**Description:** Denotes the unique id of the matrix containing similarities or distances between observations and should be unique within the scope of the dataset.  
 
 **Field:** edge_metric  
 **Value:** Character string  
@@ -255,10 +238,6 @@ subset - Denotes different subsets of features that may be required at different
 # Provenance (LOG) class
 
 **General description:** These fields are used to capture information about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
-
-**Field:** record_id  
-**Value:** Character string  
-**Description:** ID used to link FOMs, annotations, and graphs to a specific set of `record_package_name`, `record_package_version`, `record_function_name`, and `record_function_parameters` fields. 
 
 **Field:** record_package_name  
 **Value:** Character string  
