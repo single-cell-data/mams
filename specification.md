@@ -10,11 +10,11 @@
 
 **Field:** class  
 **Value:** Character string  
-**Description:** Denotes the class of the matrix, array, data frame. One of `fom`, `fam`, `oam`, `fid`, or `oid`. Each class will have a correpsonding set of metadata fields.
+**Description:** Denotes the class of the matrix, array, data frame. One of `FOM`, `VAR`, `OBS`, `FID`, `OID`, or `REC`. Each class will have a correpsonding set of metadata fields associated with it.
 
-# Featur Obsersvation Matrix (FOM) fields
+# Feature Obsersvation Matrix class (FOM) 
 
-**General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. The main elements of a fom are the central feature-observation data matrix (fom), observation ID vector or matrix (oid), feature ID vector or matrix (fid), feature annotation matrix (fam), and observation annotation matrix (oam).
+**General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. 
 
 
 ## Matrix description fields
@@ -105,7 +105,7 @@
 
 **Field:** modality  
 **Value:** Character string    
-**Description:** Describes the modality of the matrix. If features or observations are of mixed modalities, then `feature_modality` in the FAM class or `observation_modality` in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
+**Description:** Describes the modality of the matrix. If features or observations are of mixed modalities, then `feature_modality` in the `var` class or `observation_modality` in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
 
 ## Subset fields
 
@@ -151,7 +151,7 @@
 
 **Field:** record_id  
 **Value:** Character string or list  
-**Description:** ID used to link FOMs to a specific record or set of records that produced the FOM. This should match an ID in the `LOG` class.  
+**Description:** ID used to link FOMs to a specific record or set of records that produced the FOM. This should match an ID in the `log` class.  
 
 ## Grouping fields
 
@@ -172,7 +172,7 @@
 **Considerations for implementation:**  The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
 
 
-# Observation ID class
+# Observation ID class (OID)
 
 **General Description:** An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
@@ -184,7 +184,7 @@
 **Value:** Character string  
 **Description:** A character string denoting the delimiter that can be used to separate compound observation IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
 
-# Feature ID class
+# Feature ID class (FID)
 
 **General description:** A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
@@ -197,18 +197,18 @@
 **Description:** A character string denoting the delimiter that can be used to separate compound feature IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the FID is not a compound ID. 
 
 
-# Observation Annotation Matrix (OAM)
+# Observation Annotation class (OBS)
 
-**General description:** OAM objects are matrices or data frames with the same number of observations as its corresponding `FOM`. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
+**General description:** `OBS` objects are matrices or data frames with the same number of observations as its corresponding FOM. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
 **Field:** observation_modality  
 **Value:** Character string or vector  
 **Description:** Vector denoting the modality of each observation. This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
-# Feature Annotation Matrix class
+# Feature Annotation class (VAR)
 
-**General description:** `FAM` obects are matricies or data frames with the same number of features as its corresponding `FOM`. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
+**General description:** `VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
 **Field:** feature_modality  
 **Value:** Character string or vector  
@@ -216,7 +216,7 @@
 **Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
-# Observation Graph (ONG) class
+# Observation Neighborhood Graph class (ONG)
 
 **General description:** Observation Neighborhood Graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of observations. These measurements are often used by graph-based clustering and visualization tools.
 
@@ -228,7 +228,7 @@
 **Value:** Character string. One of “distance” or “similarity”.  
 **Description:** “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
 
-# Feature Graph (FNG) class
+# Feature Neighborhood Graph class (FNG)
 **General description:** Feature neighborhood graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of features. These measurements are often used by graph-based clustering and visualization tools.
 
 **Field:** edge_metric  
@@ -240,7 +240,7 @@
 **Description:** “distance” indicates that smaller values denote more relatedness between features (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
 
 
-# LOG class
+# Provenance record class (REC)
 
 **General description:** These fields are used to capture provenance about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
 
