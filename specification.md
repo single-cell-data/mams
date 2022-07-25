@@ -152,13 +152,33 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | detected | Features that have a minimum level of detection across observations. Only including features with at least 3 counts in at least 3 observations. |
 | variable | Features that have minimum level of variability across all cells | The top 2,000 most variable features across observations |
 
-**Field:** parent_id  
-**Value:** Character string or list    
-**Description:** Character string or list to denote the matrix id(s) that were used to produce the matrix.
+## Provenance fields
 
 **Field:** record_id  
 **Value:** Character string or list  
 **Description:** ID used to link FOMs to a specific record or set of records that produced the FOM. This should match an ID in the `log` class.  
+
+**Field:** parent_id  
+**Value:** Character string or list    
+**Description:** Denotes the matrix id(s) that were used to produce the matrix.
+
+**Field:** parent_relationship  
+**Value:** Character string   
+**Description:** Denotes the type of relationship with the parent matrix or matrices. 
+
+**Field:** parent_relationship_description  
+**Value:** Character string   
+**Description:** A brief description of the `parent_relationship_description` field.   
+
+**Suggested categories for `parent_relationship` and `parent_relationship_description`:**
+
+| parent_relationship | parent_relationship_description | Examples |
+| -------------- | -------------------------- | ------- |
+| transformation | Values have been modified but feature and observation dimensions are the same. | Normalization and Log2 transformation |
+| subset | Values have been not been modified but a subset of feature and/or observation dimensions have been selected.  | Selecting all observations with a minimun number of counts |
+| reduction | Features have been reduced to a lower number of dimensions.  | PCA, tSNE, UMAP |
+| aggregation | Values for groups of features or observations have been aggregated.  | Taking the average of each feature within each group of observations |
+
 
 ## Grouping fields
 
