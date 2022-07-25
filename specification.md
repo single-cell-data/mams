@@ -24,21 +24,17 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 
 
 # Feature Obsersvation Matrix class (FOM) 
-
-**General description:** A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. 
-
+A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. 
 
 ## Matrix description fields
 
 **Field:** data_type  
 **Value:** Character string    
 **Description:** Explicitly describes the type of data stored in the FOM (e.g. int, int64, double, enum/categorical, etc). 
-**Notes and considerations for implementation:**  
 
 **Field:** representation  
 **Value:** Character string    
 **Description:** Preferred representation of the matrix.  
-**Notes and considerations for implementation:**  
 
 **Field:** representation_description  
 **Value:** Character string    
@@ -184,8 +180,7 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 
 
 # Observation ID class (OID)
-
-**General Description:** An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the OID consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
+An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the `OID` consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
 **Field:** oid_header  
 **Value:** Character string  
@@ -196,8 +191,7 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 **Description:** A character string denoting the delimiter that can be used to separate compound observation IDs. The recommended delimiter is a period (e.g. “.”). If this field is not included, then it will be assumed that the OID is not a compound ID. 
 
 # Feature ID class (FID)
-
-**General description:** A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
+A feature_id is a character vector or combination of character vectors used to denote the unique ID of each feature. The number of elements in the vector(s) should be the same length as the number of features in the FOM. If multiple vectors, then the combination of elements across the vectors should be unique. 
 
 **Field:** fid_header  
 **Value:** Character string  
@@ -209,8 +203,7 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 
 
 # Observation Annotation class (OBS)
-
-**General description:** `OBS` objects are matrices or data frames with the same number of observations as its corresponding FOM. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
+`OBS` objects are matrices or data frames with the same number of observations as its corresponding FOM. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
 **Field:** observation_modality  
 **Value:** Character string or vector  
@@ -218,8 +211,7 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 
 
 # Feature Annotation class (VAR)
-
-**General description:** `VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
+`VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
 **Field:** feature_modality  
 **Value:** Character string or vector  
@@ -228,8 +220,7 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 
 
 # Observation Neighborhood Graph class (ONG)
-
-**General description:** Observation Neighborhood Graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of observations. These measurements are often used by graph-based clustering and visualization tools.
+Observation Neighborhood Graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of observations. These measurements are often used by graph-based clustering and visualization tools.
 
 **Field:** edge_metric  
 **Value:** Character string  
@@ -240,7 +231,7 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 **Description:** “distance” indicates that smaller values denote more relatedness between observations (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation). 
 
 # Feature Neighborhood Graph class (FNG)
-**General description:** Feature neighborhood graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of features. These measurements are often used by graph-based clustering and visualization tools.
+Feature neighborhood graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of features. These measurements are often used by graph-based clustering and visualization tools.
 
 **Field:** edge_metric  
 **Value:** Character string  
@@ -252,8 +243,11 @@ These are fields that apply to all matrix-related classes including `FOM`, `VAR`
 
 
 # Provenance record class (REC)
+These fields are used to capture provenance about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
 
-**General description:** These fields are used to capture provenance about the tool, software package, version, functions, and parameters used to create the various FOMs, annotations, and graphs. 
+**Field:** record_id  
+**Value:** Character string  
+**Description:** Unique id to denote a combination of entries for `record_package_name`, `record_package_version`, `record_function_name`, and `record_function_parameters` 
 
 **Field:** record_package_name  
 **Value:** Character string  
