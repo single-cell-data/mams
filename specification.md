@@ -1,8 +1,10 @@
 
 # Overview
-
+[TODO]
 
 # General fields
+
+These are fields that apply to all matrix-related classes including `FOM`, `VAR`, `OBS`, `FID`, and `OID`. 
 
 **Field:** id  
 **Value:** Character string  
@@ -10,7 +12,16 @@
 
 **Field:** class  
 **Value:** Character string  
-**Description:** Denotes the class of the matrix, array, data frame. One of `FOM`, `VAR`, `OBS`, `FID`, `OID`, or `REC`. Each class will have a correpsonding set of metadata fields associated with it.
+**Description:** Denotes the class of the matrix, array, data frame. One of `FOM`, `VAR`, `OBS`, `FID`, or `OID`. Each class will have a correpsonding set of metadata fields associated with it.
+
+**Field:** filepath  
+**Value:** Character string  
+**Description:** The file path to the file or data object that contains the matrix, array, or data frame.
+
+**Field:** accessor  
+**Value:** Character string  
+**Description:** The command to access the the matrix, array, or data frame from the data object stored in `filepath`.
+
 
 # Feature Obsersvation Matrix class (FOM) 
 
