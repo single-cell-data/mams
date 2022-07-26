@@ -4,11 +4,15 @@
 
 # General fields
 
-These are fields that apply to all matrix-related classes including `FOM`, `VAR`, `OBS`, `FID`, and `OID`. 
+These are fields that apply to all matrix, array and data frame related classes including `FOM`, `VAR`, `OBS`, `FID`, and `OID`. 
 
 **Field:** id  
 **Value:** Character string  
 **Description:** Denotes the unique id of the matrix, annotation data frame, or graph and should be unique within the set of objects within the same class of the dataset. This ID could be a randomized unique ID such as a UUID or could be a unique combination of other fields from the FOM schema. For example, the IDs for FOMs could be a combination of `modality` and `processing` fields with the option of including algorithm_name. In this scenario, the ids “rna.raw”, “rna.normalize”, “rna.scale” could be used describe the data matrices and “rna.reduction.pca” and “rna.embedding.umap” could be used to describe the reduced dimensional objects.  
+
+**Field:** dataset_id   
+**Value:**  Character string  
+**Description:** All matrices and data frames within this group should have observations and features that belong to a superset of observations and features that encompass an entire dataset.  Also applies to the `REC` class. 
 
 **Field:** class  
 **Value:** Character string  
@@ -184,10 +188,6 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 
 
 ## Grouping fields
-
-**Field:** dataset_id   
-**Value:**  Character string  
-**Description:** All FOMs within this group should have observations and features that belong to a superset of observations and features that encompass an entire dataset.  
 
 **Field:** fom_group_id  
 **Value:** Character string  
