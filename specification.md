@@ -90,8 +90,8 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | reduction | A matrix containing a data dimensionality reduction generally useful for input into tools for downstream analysis such as clustering or 2D-embedding. | PCA, ICA, Autoencoders |
 | embedding | A matrix containing a low dimensional embedding (usually 2D or 3D) generally used for visualization. Child of `reduction` | UMAP, tSNE | 
 
-**Field:** analyte  
-**Value:** Character string or list
+**Field:** analyte    
+**Value:** Character string or list  
 **Description:** Used to describe the biological analytes being quantified in the matrix. If more than one analyte was used to generate the values in a multi-modal analysis, then a list can be used to capture multiple analytes (e.g. a 2-D embedding generated from combined graph of RNA and protein data). 
 
 **Field:** analyte_description  
@@ -120,7 +120,7 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 **Value:** Character string    
 **Description:** Describes the subset of observations that are present in the FOM. This field can be used to denote different subsets of observations that may be required at different stages of analysis after removing poor quality observations. Several suggested cateogories are provided for common quality control steps. This term can also be used describe a matrix containing a subset of observations based on biological characteristics. For example, after initial clustering and cell type identification, a subset of cells belonging to a particular cell type (e.g. T-cells) may be isolated and re-clustered to better characterize transitionary cell states within the cell type. This subset may have its own normalization, dimensionality reductions, embeddings, etc. 
 
-**Field:** obs_subset_description
+**Field:** obs_subset_description  
 **Value:** Character string    
 **Description:** A brief description of the `obs_subset` field.   
 
@@ -129,17 +129,17 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | obs_subset | obs_subset_description | Examples |
 | ---------- | ---------------------- | --------------- |
 | full | Observations have not been filtered or subsetted. |
-| filtered | Observations that have enough signal above background. For example, droplets (or cell barcodes) that have enough counts to be considered to be non-empty. Similar to the “filtered” matrix from CellRanger. |
-| threshold | Observations that have a total signal above a certain threshold. For example, only including cells with a total UMI or read count above a certain threshold across features. |
-| detected | Observations that have minimum levels of detection across features. For example, only including cells with at least 3 counts in at least 3 genes. |
-| nonartifact | A general term to describe filtering that may occur due other quality control metrics. Examples of other artifacts in single cell RNA-seq data include high contamination from ambient material, high mitochondrial percentage, or doublets/multiplets. |
-| clean | An “analysis ready” set of observations that have been filtered for total signal, detection across features, outliers, and any other artifacts deemed to be important to filter against for quality control purposes. |
+| filtered | Observations that have enough signal above background. | Droplets (or cell barcodes) that have enough counts to be considered to be non-empty. Similar to the “filtered” matrix from CellRanger. |
+| threshold | Observations that have a total signal above a certain threshold | Filtering to include cells with a total UMI or read count above a certain threshold across features. |
+| detected | Observations that have minimum levels of detection across features. | Filtering include cells with at least 3 counts in at least 3 genes. |
+| nonartifact | A general term to describe filtering that may occur due other quality control metrics. | Artifacts in single cell RNA-seq data include high contamination from ambient material, high mitochondrial percentage, or doublets/multiplets. |
+| clean | An “analysis ready” set of observations. | Cells that have been filtered for total signal, detection across features, outliers, and any other artifacts deemed to be important to filter against for quality control purposes. |
 
 **Field:** feature_subset  
 **Value:** Character string    
 **Description:** Describes the subset of features that are present in the FOM.   
 
-**Field:** feature_subset_description
+**Field:** feature_subset_description   
 **Value:** Character string    
 **Description:** A brief description of the `feature_subset` field.   
 
@@ -156,11 +156,11 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 
 **Field:** record_id  
 **Value:** Character string or list  
-**Description:** ID used to link FOMs to a specific record or set of records that produced the FOM. This should match an ID in the `log` class.  
+**Description:** ID used to link FOMs to a specific record or set of records that produced the FOM. This should match an ID in the `REC` class.  
 
 **Field:** parent_id  
 **Value:** Character string or list    
-**Description:** Denotes the matrix id(s) that were used to produce the matrix.
+**Description:** Denotes the id(s) of the parent matrices that were used to produce the matrix.
 
 **Field:** parent_relationship  
 **Value:** Character string   
@@ -176,8 +176,11 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | -------------- | -------------------------- | ------- |
 | transformation | Values have been modified but feature and observation dimensions are the same. | Normalization and Log2 transformation |
 | subset | Values have been not been modified but a subset of feature and/or observation dimensions have been selected.  | Selecting all observations with a minimun number of counts |
-| reduction | Features have been reduced to a lower number of dimensions.  | PCA, tSNE, UMAP |
-| aggregation | Values for groups of features or observations have been aggregated.  | Taking the average of each feature within each group of observations |
+| concatenation | Matrices that have been aggregated.  | Concatenating matrices of observations from two samples with the same features |
+| reduction | Features have been reduced to a lower number of dimensions. | PCA, tSNE, UMAP |
+| factorization | Decomposition of a matrix into two matrices of features and factors as well as factors and observations. | NMF, LDA |
+| aggregation | Aggregating values for groups of features or observations.  | Taking the average of each feature within each group of observations |
+
 
 
 ## Grouping fields
@@ -188,13 +191,11 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 
 **Field:** fom_group_id  
 **Value:** Character string  
-**Description:** A group of FOMs with the same sets of features and observations.   
-**Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the features and observations be in the same order across FOMs. 
+**Description:** A group of FOMs with the same sets of features and observations. If the FOM is stored in an array-like format, it is recommended that the features and observations be in the same order across FOMs. 
 
 **Field:** obs_group_id  
 **Value:** Character string    
-**Description:** A group of FOMs with the same set of observations.  
-**Notes and considerations for implementation:** If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs. 
+**Description:** A group of FOMs with the same set of observations. If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs. 
 
 **Considerations for implementation:**  The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
 
@@ -286,6 +287,6 @@ These fields are used to capture provenance about the tool, software package, ve
 **Description:** Key/value pairs describing the primary parameters and their values used in the function call.
 
 **Field:** record_workflow_link  
-**Value:** Character string
+**Value:** Character string  
 **Description:** Public link to workflow that ran the tool. For example, links to workflow scripts such as CWL, WDL, Nextflow, etc. stored in a public repository such as GitHub, DockerHub, etc. 
 
