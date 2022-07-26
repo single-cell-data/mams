@@ -285,4 +285,7 @@ These fields are used to capture provenance about the tool, software package, ve
 **Value:** Character string or list   
 **Description:** Key/value pairs describing the primary parameters and their values used in the function call.
 
+**Field:** record_workflow_link  
+**Value:** Character string
+**Description:** Public link to workflow that ran the tool. For example, links to workflow scripts such as CWL, WDL, Nextflow, etc. stored in a public repository such as GitHub, DockerHub, etc. 
 
