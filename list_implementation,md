@@ -1,3 +1,0 @@
-# Overview
-
-We adopt key-value pair list structure to store the metadata information of a adataset. A list object in R, a YAML file or a JSON file works for this purpose. 
