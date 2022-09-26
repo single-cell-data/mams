@@ -188,25 +188,6 @@ These fields are used to link the FOM to a provenance record and describe the re
 | factorization | Decomposition of a matrix into two matrices of features and factors as well as factors and observations. | NMF, LDA |
 | aggregation | Aggregating values for groups of features or observations.  | Taking the average of each feature within each group of observations |
 
-## Linking fields
-These fields are used to link the FOM to its corresponding ID and annotation objects. 
-
-**Field:** oid  
-**Value:** Character string  
-**Description:** `id` of `OID` object that contains the observation IDs for this FOM.
-
-**Field:** fid  
-**Value:** Character string  
-**Description:** `id` of `FID` object that contains the feature IDs for this FOM.
-
-**Field:** obs  
-**Value:** Character string or list  
-**Description:** `id`(s) of `OBS` object(s) that contain annotations for the observation in this FOM.
-
-**Field:** var  
-**Value:** Character string or list  
-**Description:** `id`(s) of `VAR` object(s) that contain annotations for the features in this FOM.
-
 
 ## Grouping fields
 
