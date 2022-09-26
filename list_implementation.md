@@ -1,6 +1,28 @@
 # Overview
 
-We adopt key-value pair list structure to store the metadata information of a data set. A list object in R, a YAML file or a JSON file works for this purpose. The basic structure consists of multiple data sets at the first level. Within each data set, we set fields for `FOM`, `OBS`, `VAR` and etc. Then we got all the FOMs in each data set embedded in the `FOM` field of each data set and so on so forth. Finally, for each FOM, OBS and etc., there would be fields to describe the metadata, which is descibed in detail in the [Specifications](https://github.com/mvfki/mams/blob/main/specification.md). 
+We adopt key-value pair list structure to store the metadata information of a data set. A list object in R, a YAML file or a JSON file works for this purpose. The basic structure consists of multiple data sets at the first level. Within each data set, we set fields for `FOM`, `OBS`, `VAR` and etc. Then we got all the FOMs in each data set embedded in the `FOM` field of each data set and so on so forth. Finally, under the element for each matrix, the fields to describe the metadata will be listed.. These fields are descibed in detail in the [Specifications](https://github.com/mvfki/mams/blob/main/specification.md). 
+
+# Extra fields
+
+## Linking fields
+These fields are used to link the FOM to its corresponding ID and annotation objects. 
+
+**Field:** oid  
+**Value:** Character string  
+**Description:** `id` of `OID` object that contains the observation IDs for this FOM.
+
+**Field:** fid  
+**Value:** Character string  
+**Description:** `id` of `FID` object that contains the feature IDs for this FOM.
+
+**Field:** obs  
+**Value:** Character string or list  
+**Description:** `id`(s) of `OBS` object(s) that contain annotations for the observation in this FOM.
+
+**Field:** var  
+**Value:** Character string or list  
+**Description:** `id`(s) of `VAR` object(s) that contain annotations for the features in this FOM.
+
 
 # Example
 
