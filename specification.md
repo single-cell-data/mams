@@ -114,6 +114,7 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | morphology | Used for morphological measurements often derived from imaging technologies (e.g. cell size or shape). |
 | lipid | Used for technologies that measure lipid levels. |
 | metabolite | Used for technologies that measure metabolite levels. |
+| methylation | Used for technologies that measure methtylation levels. |
 
 **Field:** modality  
 **Value:** Character string    
