@@ -57,7 +57,7 @@ pbmc8k:                     # [1]
       accessor: '`pbmc8k_seurat_raw[["ADT"]][[]]`'
       feature_modality: protein
   ONG:
-    ogr1:
+    ong1:
       filepath: pbmc8k_seurat_filtered.rds
       accessor: '`Graphs(pbmc8k_seurat_filtered, "RNA_nn")`'
       edge_metric: euclidean
