@@ -64,7 +64,8 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | obs_unit | obs_unit_description | Notes/Examples |
 | -------------- | ---------------------------| ----------------|
 | bulk | Features are quantified for a collection of cells (e.g. bulk) such as tissue or culture | Bulk RNA-seq or ATAC-seq |
-| cell | Features are quantified for individual cells | Single-cell RNA-seq or single-cell ATAC-seq |
+| cell | Features are quantified for individual cells | Single-cell RNA-seq |
+| nucleus | Features are quantified for individual nuclei | Single-nucleus RNA-seq (snuc-seq) or single-nucleus ATAC-seq |
 
 
 **Field:** processing  
