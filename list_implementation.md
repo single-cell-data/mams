@@ -4,7 +4,17 @@ We adopt key-value pair list structure to store the metadata information of a da
 
 # Extra fields
 
-## Linking fields
+## General fields
+
+**Field:** filepath  
+**Value:** Character string  
+**Description:** The file path to the file or data object that contains the matrix, array, or data frame.
+
+**Field:** accessor  
+**Value:** Character string  
+**Description:** The command to access the the matrix, array, or data frame from the data object stored in `filepath`.
+
+## FOM inking fields
 These fields are used to link the FOM to its corresponding ID and annotation objects. 
 
 **Field:** oid  
