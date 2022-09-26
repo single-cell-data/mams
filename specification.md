@@ -83,12 +83,12 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 | raw | Original measurements have not been altered |
 | counts | Raw data for assays that produce integer-like data such as scRNA-seq. Child of `raw`.|  |
 | intensities | Raw data for assays that produce continuous data. Child of `raw`. | |
-| decontaminated | Measurements have been corrected for background signal such as ambient RNA in single-cell RNA-seq. Child of `raw`. | |
+| decontaminated | Measurements have been corrected for background signal.  | Ambient RNA removal in single-cell RNA-seq. |
 | lograw | The log of the raw data |
-| logcounts | The log of the raw counts Child of `lograw`. | |
-| logintensities | The log of the raw intensity values. Child of `raw`.| |
+| logcounts | The log of the raw counts | |
+| logintensities | The log of the raw intensity values. | |
 | corrected | Measurements have been corrected for observation-level covariates | |
-| normalized | Data that has been normalized for differences in overall signal abundance between observations. | |
+| normalized | Data that has been normalized for differences in overall signal abundance between observations. | Correcting for total number of UMIs or reads in each cell. |
 | lognormalized | Data that has been log transformed after normalizing for differences in overall signal abundance between observations. Child of `normalized`.| |
 | centered | Data with features have been made to center around a standard quantity such as the mean or median. | Mean-centered data |
 | scaled | Data with features have been centered around a standard quantity and standardized to have similar variances or ranges. | Z-scored data |
