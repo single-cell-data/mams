@@ -18,14 +18,6 @@ These are fields that apply to all matrix, array and data frame related classes 
 **Value:** Character string  
 **Description:** Denotes the class of the matrix, array, data frame. One of `FOM`, `VAR`, `OBS`, `FID`, or `OID`. Each class will have a correpsonding set of metadata fields associated with it.
 
-**Field:** filepath  
-**Value:** Character string  
-**Description:** The file path to the file or data object that contains the matrix, array, or data frame.
-
-**Field:** accessor  
-**Value:** Character string  
-**Description:** The command to access the the matrix, array, or data frame from the data object stored in `filepath`.
-
 
 # Feature Obsersvation Matrix class (FOM) 
 A feature and observation matrix (FOM) is a data matrix that contains measurements of molecular features in biological entities. Examples of features include genes, genomic regions or peaks, transcripts, proteins, antibodies derived tags, signal intensities, cell type counts. Examples of observations include cells, cell pools, beads, spots, subcellular regions, and regions of interest (ROIs). Measurements may include transcript counts, protein abundances, signal intensities and velocity estimates. 
