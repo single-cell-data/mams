@@ -181,19 +181,6 @@ These fields are used to link the FOM to a provenance record and describe the re
 | aggregation | Aggregating values for groups of features or observations.  | Taking the average of each feature within each group of observations |
 
 
-## Grouping fields
-
-**Field:** fom_group_id  
-**Value:** Character string  
-**Description:** A group of FOMs with the same sets of features and observations. If the FOM is stored in an array-like format, it is recommended that the features and observations be in the same order across FOMs. 
-
-**Field:** obs_group_id  
-**Value:** Character string    
-**Description:** A group of FOMs with the same set of observations. If the FOM is stored in an array-like format, it is recommended that the observations be in the same order across FOMs. 
-
-**Considerations for implementation:**  The obs_subset and feature_subset fields can be used to describe the observations and features that are included in the matrix. This has a similar function as the fields obs_group_id and fom_group_id which can be used to group matrices with similar dimensions. While the obs_group_id and fom_group_id fields can be any unique string, using a combination of obs_subset and feature_subset fields may provide a more informative ID. For example, obs_subset could be used as the obs_group_id. If a dataset contains multiple modalities, then a combination of modality and obs_subset could be used (e.g. “RNA.clean”). Similarly the fom_group_id could be a combination of obs_subset and feature_subset fields. For example “full.full” could be used to describe an original matrix without any filtering on either dimension while “clean.variable” could be used to describe the matrix that contains a subset of cells which passed all quality control filters and contains a subset of the top variable features. 
-
-
 # Observation ID class (OID)
 An observation_id is character vector or combination of character vectors used to denote the unique ID of each observation. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. If multiple vectors, then the combination of elements across the vectors for each combination should be unique. The number of elements in the vector(s) should be the same length as the number of observations in the FOM. Often compound IDs are created by concatenating multiple types of IDs together when matrices from different sources need to be combined. For example, a cell barcode may uniquely define a cell within a given sample, but the same cell barcode may be used across samples. To combine cell matrices from different samples, a sample ID can be concatenated with the cell barcode to make each observation ID unique across a group of samples. If the `OID` consists of multiple vectors, then the combination of elements at each position across the vectors should be unique. If the OID is a single character vector that is a compound ID, then a character delimiter should be used to separate the fields within a string and denoted with the optional delim field. For example, if “Sample_A” has a cell with a barcode of “ACGT” and the delimiter is chosen to be “.”, then the compound ID would be “Sample_A.ACGT”.
 
