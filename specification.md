@@ -8,8 +8,34 @@ Lastly, a major goal of high-quality analysis workflows is to promote reproducib
 
 In order to facilitate sharing and interoperability across consortiums and technologies and to promote reproducibility related to provenance, a detailed metadata schema describing the characteristics of FOMs can be used to serve as a standard for the community. Therefore, we developed the Matrix and Analysis Metadata Standards (MAMS) to capture the relevant information about the data matrices and annotations that are produced during common and complex analysis workflows for single-cell data. MAMS defines fields that describe what type of data is contained within a matrix, relationships between matrices, and provenance related to the tool or algorithm that created the matrix. These standards can serve as a roadmap for tool developers and data curators to ensure that their systems have the capability to store and retrieve relevant information needed for integration. All of the metadata fields are independent of the platform, programming language, and specific tool and thus can be used to support efforts to harmonize data across consortiums. 
 
-# Overview
-[TODO]
+# Quick refernence table
+
+| Field | Description | Class |
+| -------------- | -------------------------- | --- |
+| id | Denotes the unique id of the matrix, annotation data frame, or graph and should be unique within the set of objects within the same class of the dataset. | General |
+| dataset_id | All matrices and data frames within this group should have observations and features that belong to a superset of observations and features that encompass an entire dataset. | General |
+| class | Denotes the class of the matrix, array, data frame. | General |
+| data_type | Explicitly describes the type of data stored in the FOM | FOM |
+| representation | Preferred representation of the matrix. | FOM |
+| obs_unit | Biological unit of the observations | FOM |
+| processing | Used to describe the nature of the data contained within the matrix. | FOM |
+| analyte | Used to describe the biological analytes being quantified in the matrix. | FOM |
+| modality | Describes the modality of the matrix. | FOM | 
+| obs_subset | Describes the subset of observations that are present in the FOM. | FOM |
+| feature_subset | Describes the subset of features that are present in the FOM | FOM |
+| parent_id | Denotes the id(s) of the parent matrices that were used to produce the matrix | FOM |
+| parent_relationship | Denotes the type of relationship with the parent matrix or matrices | FOM |
+| edge_metric | Name of the distance or similarity metric used to create the edges between features. | ONG |
+| metric_type | “distance” indicates that smaller values denote more relatedness between features (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation) | ONG |
+| edge_metric | Name of the distance or similarity metric used to create the edges between features. | FNG |
+| metric_type | “distance” indicates that smaller values denote more relatedness between features (e.g. euclidean distance) while “similarity” indicates that larger values denote more relatedness between observations (e.g. Pearson correlation) | FNG |
+| record_id | Unique id to denote a combination of entries for record_package_name, record_package_version, record_function_name, and record_function_parameters | 
+| record_package_name | Name of the package, tool, or software that ran the algorithm to produce the matrix, annotation, or graph. | REC |
+| record_package_version | Version of the package, tool, or software that ran the algorithm to produce the matrix, annotation, or graph. | REC |
+| record_function_name | Name of the function or mathematical operation used to produce the matrix, annotation, or graph. | REC |
+| record_function_parameters | Key/value pairs describing the primary parameters and their values used in the function call. | REC |
+| record_workflow_link | Public link to workflow that ran the tool. | REC |
+
 
 # General fields
 
