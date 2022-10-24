@@ -8,7 +8,7 @@ Lastly, a major goal of high-quality analysis workflows is to promote reproducib
 
 In order to facilitate sharing and interoperability across consortiums and technologies and to promote reproducibility related to provenance, a detailed metadata schema describing the characteristics of FOMs can be used to serve as a standard for the community. Therefore, we developed the Matrix and Analysis Metadata Standards (MAMS) to capture the relevant information about the data matrices and annotations that are produced during common and complex analysis workflows for single-cell data. MAMS defines fields that describe what type of data is contained within a matrix, relationships between matrices, and provenance related to the tool or algorithm that created the matrix. These standards can serve as a roadmap for tool developers and data curators to ensure that their systems have the capability to store and retrieve relevant information needed for integration. All of the metadata fields are independent of the platform, programming language, and specific tool and thus can be used to support efforts to harmonize data across consortiums. 
 
-# Quick refernence table
+# Quick reference table
 
 | Field | Description | Class |
 | -------------- | -------------------------- | --- |
@@ -305,4 +305,17 @@ These fields are used to capture provenance about the tool, software package, ve
 **Field:** record_workflow_link  
 **Value:** Character string  
 **Description:** Public link to workflow that ran the tool. For example, links to workflow scripts such as CWL, WDL, Nextflow, etc. stored in a public repository such as GitHub, DockerHub, etc. 
+
+**Field:** record_runtime_start
+**Value:** Character string in ISO 8601 format
+**Description:** The start time of the algorithm or operation.
+
+**Field:** record_runtime_end
+**Value:** Character string in ISO 8601 format
+**Description:** The finishing time of the algorithm or operation.
+
+**Field:** record_runtime_duration
+**Value:** Character string
+**Description:** The total duration of the algorithm or operation.
+
 
