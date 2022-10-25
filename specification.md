@@ -250,6 +250,22 @@ A feature_id is a character vector or combination of character vectors used to d
 # Feature Annotation class (VAR)
 `VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
+**Field**: feature_name  
+**Value**: Character string  
+**Description**: Name of the features to be displayed. An example is "Symbol".  
+
+**Field:** reference_database  
+**Value:** Character string  
+**Description:** Reference database for the features. Examples are "GENCODE" or "ENSEMBL".  
+
+**Field:** reference_database_version  
+**Value:** Character string  
+**Description:** Version of the reference database for the features.  
+
+**Field:** reference_organism  
+**Value:** Character string  
+**Description:** Organism of the reference database. Examples are *Homo sapiens* and *Mus musculus*.  
+
 **Field:** record_id  
 **Value:** Character string or list  
 **Description:** ID used to link an FEA annotation to a specific record or set of records. This should match an ID in the REC class.  
