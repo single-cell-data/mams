@@ -242,17 +242,17 @@ A feature_id is a character vector or combination of character vectors used to d
 # Observation Annotation class (OBS)
 `OBS` objects are matrices or data frames with the same number of observations as its corresponding FOM. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
-**Field:** record_id
-**Value:** Character string or list
-**Description:** ID used to link an OBS annotation to a specific record or set of records. This should match an ID in the REC class.
+**Field:** record_id  
+**Value:** Character string or list  
+**Description:** ID used to link an OBS annotation to a specific record or set of records. This should match an ID in the REC class.  
 
 
 # Feature Annotation class (VAR)
 `VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
-**Field:** record_id
-**Value:** Character string or list
-**Description:** ID used to link an FEA annotation to a specific record or set of records. This should match an ID in the REC class.
+**Field:** record_id  
+**Value:** Character string or list  
+**Description:** ID used to link an FEA annotation to a specific record or set of records. This should match an ID in the REC class.  
 
 # Observation Neighborhood Graph class (ONG)
 Observation Neighborhood Graphs (i.e. adjacency matrices) can be used to store the correlation, similarity, or distance between pairs of observations. These measurements are often used by graph-based clustering and visualization tools.
@@ -304,16 +304,16 @@ These fields are used to capture provenance about the tool, software package, ve
 **Value:** Character string  
 **Description:** Public link to workflow that ran the tool. For example, links to workflow scripts such as CWL, WDL, Nextflow, etc. stored in a public repository such as GitHub, DockerHub, etc. 
 
-**Field:** record_runtime_start
-**Value:** Character string in ISO 8601 format
-**Description:** The start time of the algorithm or operation.
+**Field:** record_runtime_start  
+**Value:** Character string in ISO 8601 format  
+**Description:** The start time of the algorithm or operation.  
 
-**Field:** record_runtime_end
-**Value:** Character string in ISO 8601 format
-**Description:** The finishing time of the algorithm or operation.
+**Field:** record_runtime_end  
+**Value:** Character string in ISO 8601 format  
+**Description:** The finishing time of the algorithm or operation.  
 
-**Field:** record_runtime_duration
-**Value:** Character string
-**Description:** The total duration of the algorithm or operation.
+**Field:** record_runtime_duration  
+**Value:** Character string  
+**Description:** The total duration of the algorithm or operation.  
 
 
