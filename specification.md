@@ -39,7 +39,7 @@ In order to facilitate sharing and interoperability across consortiums and techn
 
 # General fields
 
-These are fields that apply to all matrix, array and data frame related classes including `FOM`, `VAR`, `OBS`, `FID`, and `OID`. 
+These are fields that apply to all matrix, array and data frame related classes including `FOM`, `FEA`, `OBS`, `FID`, and `OID`. 
 
 **Field:** id  
 **Value:** Character string  
@@ -51,7 +51,7 @@ These are fields that apply to all matrix, array and data frame related classes 
 
 **Field:** class  
 **Value:** Character string  
-**Description:** Denotes the class of the matrix, array, data frame. One of `FOM`, `VAR`, `OBS`, `FID`, or `OID`. Each class will have a correpsonding set of metadata fields associated with it.
+**Description:** Denotes the class of the matrix, array, data frame. One of `FOM`, `FEA`, `OBS`, `FID`, or `OID`. Each class will have a correpsonding set of metadata fields associated with it.
 
 
 # Feature Obsersvation Matrix class (FOM) 
@@ -145,7 +145,7 @@ A feature and observation matrix (FOM) is a data matrix that contains measuremen
 
 **Field:** modality  
 **Value:** Character string    
-**Description:** Describes the modality of the matrix. If features or observations are of mixed modalities, then `feature_modality` in the `var` class or `observation_modality` in the FOM class should be used, respectively. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
+**Description:** Describes the modality of the matrix. This field may often be the same as another field or a combination of other fields such as `analyte` or `species`.
 
 ## Subset fields
 
@@ -247,8 +247,8 @@ A feature_id is a character vector or combination of character vectors used to d
 **Description:** ID used to link an OBS annotation to a specific record or set of records. This should match an ID in the REC class.  
 
 
-# Feature Annotation class (VAR)
-`VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
+# Feature Annotation class (FEA)
+`FEA` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
 
 **Field**: feature_name  
 **Value**: Character string  
