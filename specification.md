@@ -242,18 +242,9 @@ A feature_id is a character vector or combination of character vectors used to d
 # Observation Annotation class (OBS)
 `OBS` objects are matrices or data frames with the same number of observations as its corresponding FOM. It is used to store annotations and observation-level metadata such as quality control metrics (e.g. total counts), sample demographics (e.g. age, disease status), and analysis results (e.g. cluster labels, trajectory scores).
 
-**Field:** observation_modality  
-**Value:** Character string or vector  
-**Description:** Vector denoting the modality of each observation. This field may often be the same as another field or a combination of other fields such as analyte or species.
-
 
 # Feature Annotation class (VAR)
 `VAR` obects are matricies or data frames with the same number of features as its corresponding FOM. It is used to store annotations and feature-level metadata such as IDs (e.g. Ensembl, Gene Symbol), reference information (e.g. chromosome coordinates, gene biotype), and analysis results (e.g. variability metrics, cluster labels).
-
-**Field:** feature_modality  
-**Value:** Character string or vector  
-**Description:** Vector denoting the modality of each feature.
-**Notes and considerations for implementation:** This field may often be the same as another field or a combination of other fields such as analyte or species.
 
 
 # Observation Neighborhood Graph class (ONG)
