@@ -1,0 +1,67 @@
+pbmc8k:
+  FOM:
+    fom1:
+      filepath: pbmc8k_seurat_raw.rds
+      accessor: 'GetAssayData(object = pbmc8k_seurat_raw, slot = "counts", assay = "RNA")'
+      oid: oid1
+      fid: fid1
+      obs: obs1
+      var: var1
+      data_type: int
+      representation: sparse
+      obs_unit: cell
+      processing: counts
+      feature_subset: full
+      modality: rna
+      analyte: rna
+      obs_subset: full
+      record_id: CellRanger.count
+  OID:
+    oid1:
+      filepath: pbmc8k_seurat_raw.rds
+      accessor: '`colnames(pbmc8k_seurat_raw)`'
+    oid2:
+      filepath: pbmc8k_seurat_nonempty.rds
+      accessor: '`colnames(pbmc8k_seurat_nonempty)`'
+  FID:
+    fid1:
+      filename: pbmc8k_seurat_raw.rds
+      accessor: '`rownames(Assays(pbmc8k_seurat_raw, slot = "RNA))`'
+    fid2:
+      filename: pbmc8k_seurat_raw.rds
+      accessor: '`rownames(Assays(pbmc8k_seurat_raw, slot = "ADT))`'
+  OBS:
+    obs1:
+      filepath: pbmc8k_seurat_raw.rds
+      accessor: '`pbmc8k_seurat_raw[[]]`'
+    obs2:
+      filepath: pbmc8k_seurat_nonempty.rds
+      accessor: '`pbmc8k_seurat_nonempty[[]]`'
+  VAR:
+    var1:
+      filepath: pbmc8k_seurat_raw.rds
+      accessor: '`pbmc8k_seurat_raw[["RNA"]][[]]`'
+      feature_modality: rna
+    var2:
+      filepath: pbmc8k_seurat_raw.rds
+      accessor: '`pbmc8k_seurat_raw[["ADT"]][[]]`'
+      feature_modality: protein
+  ONG:
+    ong1:
+      filepath: pbmc8k_seurat_filtered.rds
+      accessor: '`Graphs(pbmc8k_seurat_filtered, "RNA_nn")`'
+      edge_metric: euclidean
+      metric_type: distance
+      parent_id: fom11
+      record_id: FindNeighbors.RNA.pca
+  REC:
+    CellRanger.count:
+      record_package_name: CellRanger
+      record_package_version: 3.0.0
+      record_function_name: count
+    NormalizeData.RNA:
+      record_package_name: Seurat
+      record_package_version: 4.1.0
+      record_function_name: NormalizeData
+      record_function_parameters: >-
+        [assay=RNA,normalization.method=LogNormalize,scale.factor=10000,margin=1,verbose=TRUE]
